@@ -1,8 +1,5 @@
 # Trang web tìm kiếm phòng trọ
 
-## 1. Shiyousho
-[火1-OSAKE-k64-ITSS2_システム仕様書（Shichinin）](https://docs.google.com/spreadsheets/d/1HsgODrQXpRjcx2sSIUbgq6Z2qDV6rKnhnmoF6Ia8sk8/edit#gid=1605266564)
-
 ## 2. Cài đặt dự án
 
 ### 2.1. Cài đặt package

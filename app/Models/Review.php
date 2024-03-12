@@ -11,7 +11,7 @@ class Review extends Model
 
     protected $fillable = [
         'user_id',
-        'post_id',
+        'house_id',
         'content',
     ];
 
@@ -19,9 +19,9 @@ class Review extends Model
      * Relationships
      */
 
-    // 1 post - n reviews
-    public function post() {
-        return $this->belongsTo(Post::class);
+    // 1 house - n reviews
+    public function house() {
+        return $this->belongsTo(House::class);
     }
 
     // 1 user - n reviews

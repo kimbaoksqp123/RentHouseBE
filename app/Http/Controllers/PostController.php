@@ -3,16 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\Post;
+use App\Models\House;
 use App\Models\User;
 use Illuminate\Http\Request;
 
-class PostController extends Controller
+class HouseController extends Controller
 {
     public function index(Request $request)
     {
 
-        $query = Post::query();
+        $query = House::query();
 
         $sortType = $request->query('sortType', 0);
         $type = $request->type;
@@ -64,64 +64,64 @@ class PostController extends Controller
         if ($street)
             $query->where('street', 'LIKE', "%$street%");
 
-        $posts = $query->with(['images', 'videos'])->get();
+        $houses = $query->with(['images', 'videos'])->get();
 
-        foreach ($posts as $post) {
+        foreach ($houses as $house) {
 
-            $post['fullname'] = $post->user->name;
-            $post['phone'] = $post->user->phone;
-            unset($post['user']);
+            $house['fullname'] = $house->user->name;
+            $house['phone'] = $house->user->phone;
+            unset($house['user']);
 
-            foreach ($post->images as $image) {
+            foreach ($house->images as $image) {
                 unset($image['created_at'], $image['updated_at']);
             }
         }
 
-        // xác định các post có trong bookmark hay k ?
+        // xác định các house có trong bookmark hay k ?
         $user = User::find($userId);
 
         if($user) {
-            $bookmarkedPosts = $user->bookmarks()->pluck('post_id')->toArray();
+            $bookmarkedHouses = $user->bookmarks()->pluck('house_id')->toArray();
 
-            foreach ($posts as $post) {
-                $post['isSaved'] = in_array($post->id, $bookmarkedPosts);
+            foreach ($houses as $house) {
+                $house['isSaved'] = in_array($house->id, $bookmarkedHouses);
             }
         }
 
-        return $posts;
+        return $houses;
     }
 
     public function show(Request $request, $id)
     {
         $userId = $request->user_id;
 
-        $post = Post::with(['user', 'images', 'videos'])->find($id);
+        $house = House::with(['user', 'images', 'videos'])->find($id);
 
-        $post->view_number++;
-        $post->save();
+        $house->view_number++;
+        $house->save();
 
-        // post đã thêm vào bookmark hay chưa
+        // house đã thêm vào bookmark hay chưa
         $user = User::find($userId);
         if($user) {
-            $bookmarkedPosts = $user->bookmarks()->pluck('post_id')->toArray();
+            $bookmarkedHouses = $user->bookmarks()->pluck('house_id')->toArray();
 
-            $post->isSaved = in_array($post->id, $bookmarkedPosts);
+            $house->isSaved = in_array($house->id, $bookmarkedHouses);
         }
 
         // thêm review
         $reviewController = new ReviewController();
-        $post['reviews'] = $reviewController->index($userId, $post->id);
+        $house['reviews'] = $reviewController->index($userId, $house->id);
 
-        return $post;
+        return $house;
     }
 
     public function featured()
     {
-        $featuredPosts = Post::with('images')
+        $featuredHouses = House::with('images')
             ->orderBy('view_number', 'desc')
             ->limit(5)
             ->get();
-        return $featuredPosts;
+        return $featuredHouses;
     }
 
     public function similar(Request $request) {
@@ -130,7 +130,7 @@ class PostController extends Controller
         $district = $request->district;
         $ward = $request->ward;
 
-        $query = Post::query()->with(['images', 'videos'])->whereNot('id', $id);
+        $query = House::query()->with(['images', 'videos'])->whereNot('id', $id);
 
         // district
         if ($district && $ward)
@@ -164,7 +164,7 @@ class PostController extends Controller
         $ward = $request->ward;
         $street = $request->street;
 
-        $query = Post::query();
+        $query = House::query();
 //        return $type;
         // type
         if (isset($type))

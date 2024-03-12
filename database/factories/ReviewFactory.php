@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\Post;
+use App\Models\House;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Arr;
@@ -20,11 +20,11 @@ class ReviewFactory extends Factory
     public function definition(): array
     {
         $userIds = User::pluck('id')->all();
-        $postIds = Post::pluck('id')->all();
+        $houseIds = House::pluck('id')->all();
 
         return [
             'user_id' => Arr::random($userIds),
-            'post_id' => Arr::random($postIds),
+            'house_id' => Arr::random($houseIds),
             'content' => fake()->paragraph(),
             'created_at' => fake()->dateTimeBetween(date('Y-m-d', strtotime('-2 week')), now()),
         ];

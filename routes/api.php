@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\PostController;
+use App\Http\Controllers\HouseController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\UserController;
@@ -22,17 +22,17 @@ use App\Http\Controllers\UserController;
 
     Route::post('/login', [LoginController::class, 'index']);
 
-    Route::prefix('posts')->group(function () {
-        Route::post('/', [PostController::class, 'index'])
-            ->name('post.list');
-        Route::get('/featured', [PostController::class, 'featured'])
-            ->name('post.featured');
-        Route::get('/similar', [PostController::class, 'similar'])
-            ->name('post.similar');
-        Route::post('/filter', [PostController::class, 'filter'])
-            ->name('post.filter');
-        Route::get('/{id}', [PostController::class, 'show'])
-            ->name('post.show');
+    Route::prefix('houses')->group(function () {
+        Route::post('/', [HouseController::class, 'index'])
+            ->name('house.list');
+        Route::get('/featured', [HouseController::class, 'featured'])
+            ->name('house.featured');
+        Route::get('/similar', [HouseController::class, 'similar'])
+            ->name('house.similar');
+        Route::post('/filter', [HouseController::class, 'filter'])
+            ->name('house.filter');
+        Route::get('/{id}', [HouseController::class, 'show'])
+            ->name('house.show');
     });
 
     Route::prefix('review')->group(function () {
@@ -44,10 +44,10 @@ use App\Http\Controllers\UserController;
 
     Route::prefix('user')->group(function () {
         Route::get('/getBm', [UserController::class, 'getBm'])
-            ->name('post.get-bookmark');
+            ->name('house.get-bookmark');
         Route::post('/addBm', [UserController::class, 'storeBm'])
-            ->name('post.add-bookmark');
+            ->name('house.add-bookmark');
         Route::delete('/deleteBm', [UserController::class, 'deleteBm'])
-            ->name('post.delete-bookmark');
+            ->name('house.delete-bookmark');
     });
 // });

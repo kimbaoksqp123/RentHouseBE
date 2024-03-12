@@ -10,14 +10,14 @@ use Illuminate\Support\Carbon;
 
 class ReviewController extends Controller
 {
-    public function index($userId, $postId) {
+    public function index($userId, $houseId) {
 
-        $reviews = Review::where('post_id', $postId)
+        $reviews = Review::where('house_id', $houseId)
             ->with('user')
             ->get();
 
         foreach ($reviews as $review) {
-            $review['posted_time'] = Carbon::create($review->created_at)->diffForHumans();
+            $review['houseed_time'] = Carbon::create($review->created_at)->diffForHumans();
             $review['like_number'] = $review->likedUsers()->count();
             $review['liked_by_current_user'] = in_array(
                 $userId,
@@ -31,12 +31,12 @@ class ReviewController extends Controller
     public function store(Request $request) {
         
         $userId = $request->user_id;
-        $postId = $request->post_id;
+        $houseId = $request->house_id;
         $content = $request->content;
 
         $newReview = Review::create([
             'user_id' => $userId,
-            'post_id' => $postId,
+            'house_id' => $houseId,
             'content' => $content,
         ]);
 

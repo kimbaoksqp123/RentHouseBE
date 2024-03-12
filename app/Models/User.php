@@ -52,9 +52,9 @@ class User extends Authenticatable
      * Relationships
      */
 
-    // 1 user - n posts
-    public function posts() {
-        return $this->hasMany(Post::class, 'user_id', 'id');
+    // 1 user - n houses
+    public function houses() {
+        return $this->hasMany(House::class, 'user_id', 'id');
     }
 
     // 1 user - n reviews
@@ -67,9 +67,9 @@ class User extends Authenticatable
         return $this->belongsToMany(Review::class, 'review_likes')->withTimestamps();
     }
 
-    // n users - n posts
+    // n users - n houses
     public function bookmarks()
     {
-        return $this->belongsToMany(Post::class, 'bookmarks', 'user_id', 'post_id');
+        return $this->belongsToMany(House::class, 'bookmarks', 'user_id', 'house_id');
     }
 }

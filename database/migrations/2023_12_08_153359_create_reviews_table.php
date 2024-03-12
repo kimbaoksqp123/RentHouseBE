@@ -15,7 +15,7 @@ return new class extends Migration
 
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('post_id');
+            $table->unsignedBigInteger('house_id');
             $table->text('content');
             $table->timestamps();
 
@@ -23,9 +23,9 @@ return new class extends Migration
                 ->references('id')
                 ->on('users');
 
-            $table->foreign('post_id')
+            $table->foreign('house_id')
                 ->references('id')
-                ->on('posts');
+                ->on('houses');
         });
     }
 

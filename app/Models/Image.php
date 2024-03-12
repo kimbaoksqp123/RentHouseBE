@@ -11,7 +11,7 @@ class Image extends Model
     use HasFactory;
 
     protected $fillable = [
-        'post_id',
+        'house_id',
         'url',
     ];
 
@@ -19,9 +19,9 @@ class Image extends Model
      * Relationships
      */
 
-    // 1 post - n images
-    public function post() {
-        return $this->belongsTo(Post::class, 'post_id', 'id');
+    // 1 house - n images
+    public function house() {
+        return $this->belongsTo(House::class, 'house_id', 'id');
     }
 
     /**

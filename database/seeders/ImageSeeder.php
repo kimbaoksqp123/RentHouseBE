@@ -17,7 +17,7 @@ class ImageSeeder extends Seeder
             for($j=1; $j <= 4; $j++) {
                 DB::table('images')->insert(
                 [
-                    'post_id' => $i,
+                    'house_id' => $i,
                     'url' => "image\\$i\\anh$j.jpg",
                 ]);
             }

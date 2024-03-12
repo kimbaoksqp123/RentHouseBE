@@ -15,16 +15,16 @@ return new class extends Migration
 
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('post_id');
+            $table->unsignedBigInteger('house_id');
             $table->timestamps();
 
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users');
 
-            $table->foreign('post_id')
+            $table->foreign('house_id')
                 ->references('id')
-                ->on('posts');
+                ->on('houses');
         });
     }
 

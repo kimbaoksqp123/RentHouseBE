@@ -14,13 +14,13 @@ return new class extends Migration
         Schema::create('videos', function (Blueprint $table) {
 
             $table->id();
-            $table->unsignedBigInteger('post_id');
+            $table->unsignedBigInteger('house_id');
             $table->string('url');
             $table->timestamps();
 
-            $table->foreign('post_id')
+            $table->foreign('house_id')
                 ->references('id')
-                ->on('posts');
+                ->on('houses');
         });
     }
 

@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Post extends Model
+class House extends Model
 {
     use HasFactory;
 
@@ -25,36 +25,38 @@ class Post extends Model
         'bathroom_num',
         'latitude',
         'longitude',
+        'status',
+
     ];
 
     /**
      * Relationships
      */
 
-    // 1 user - n posts
+    // 1 user - n houses
     public function user() {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
-    // 1 post - n images
+    // 1 house - n images
     public function images() {
-        return $this->hasMany(Image::class, 'post_id', 'id');
+        return $this->hasMany(Image::class, 'house_id', 'id');
     }
 
-    // 1 post - n videos
+    // 1 house - n videos
     public function videos() {
-        return $this->hasMany(Video::class, 'post_id', 'id');
+        return $this->hasMany(Video::class, 'house_id', 'id');
     }
 
-    // 1 post - n reviews
+    // 1 house - n reviews
     public function reviews() {
         return $this->hasMany(Review::class);
     }
 
-    // n posts - n users
+    // n houses - n users
     public function bookmarkedBy()
     {
-        return $this->belongsToMany(User::class, 'bookmarks', 'post_id', 'user_id');
+        return $this->belongsToMany(User::class, 'bookmarks', 'house_id', 'user_id');
     }
 
     public function scopeComparePrice($query, $priceMin, $priceMax ) {

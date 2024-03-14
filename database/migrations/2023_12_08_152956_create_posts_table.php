@@ -29,6 +29,7 @@ return new class extends Migration
             $table->integer('bathroom_num');
             $table->double('latitude');
             $table->double('longitude');
+            $table->integer('status');
             $table->timestamps();
 
             $table->foreign('user_id')

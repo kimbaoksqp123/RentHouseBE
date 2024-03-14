@@ -25,6 +25,7 @@ class Post extends Model
         'bathroom_num',
         'latitude',
         'longitude',
+        'status',
     ];
 
     /**

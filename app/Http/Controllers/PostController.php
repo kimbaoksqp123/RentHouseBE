@@ -80,7 +80,7 @@ class PostController extends Controller
         // xác định các post có trong bookmark hay k ?
         $user = User::find($userId);
 
-        if($user) {
+        if ($user) {
             $bookmarkedPosts = $user->bookmarks()->pluck('post_id')->toArray();
 
             foreach ($posts as $post) {
@@ -97,20 +97,22 @@ class PostController extends Controller
 
         $post = Post::with(['user', 'images', 'videos'])->find($id);
 
-        $post->view_number++;
-        $post->save();
+        if ($post) {
+            $post->view_number++;
+            $post->save();
 
-        // post đã thêm vào bookmark hay chưa
-        $user = User::find($userId);
-        if($user) {
-            $bookmarkedPosts = $user->bookmarks()->pluck('post_id')->toArray();
+            // post đã thêm vào bookmark hay chưa
+            $user = User::find($userId);
+            if ($user) {
+                $bookmarkedPosts = $user->bookmarks()->pluck('post_id')->toArray();
 
-            $post->isSaved = in_array($post->id, $bookmarkedPosts);
+                $post->isSaved = in_array($post->id, $bookmarkedPosts);
+            }
+
+            // thêm review
+            $reviewController = new ReviewController();
+            $post['reviews'] = $reviewController->index($userId, $post->id);
         }
-
-        // thêm review
-        $reviewController = new ReviewController();
-        $post['reviews'] = $reviewController->index($userId, $post->id);
 
         return $post;
     }
@@ -124,7 +126,8 @@ class PostController extends Controller
         return $featuredPosts;
     }
 
-    public function similar(Request $request) {
+    public function similar(Request $request)
+    {
         $id = $request->id;
         $price = $request->price;
         $district = $request->district;
@@ -134,26 +137,27 @@ class PostController extends Controller
 
         // district
         if ($district && $ward)
-        $query
-            ->where('district', 'LIKE', "%$district%")
-            ->where('ward', 'LIKE', "%$ward%");
+            $query
+                ->where('district', 'LIKE', "%$district%")
+                ->where('ward', 'LIKE', "%$ward%");
 
         $query1 = $query;
         $res1 = $query1->get();
 
         // price
-        if ($price){
+        if ($price) {
             $query->whereBetween('price', [$price - 500000, $price + 500000]);
         }
         $res = $query->get();
 
-        if(count($res) > 2)
+        if (count($res) > 2)
             return $res;
         else
             return $res1;
     }
 
-    public function filter(Request $request) {
+    public function filter(Request $request)
+    {
 
         $type = $request->type;
         $priceMin = $request->priceMin;
@@ -165,7 +169,7 @@ class PostController extends Controller
         $street = $request->street;
 
         $query = Post::query();
-//        return $type;
+        //        return $type;
         // type
         if (isset($type))
             $query->whereIn('type', $type);
@@ -189,6 +193,41 @@ class PostController extends Controller
         $result = $query->with(['images', 'videos'])->get();
 
         return $result;
+    }
 
+    public function store(Request $request)
+    {
+        $imagesHouseController = new ImagesHouseController();
+        $imageFiles = $request->file("images");
+        $house = Post::create([
+            'user_id' => $request->userID,
+            'title' => $request->title,
+            'address' => $request->address,
+            'ward' => $request->ward,
+            'district' => $request->district,
+            'price' => $request->price,
+            'land_area' => $request->land_area,
+            'type' => $request->type,
+            'view_number' => 1,
+            'description' => $request->description,
+            'bedroom_num' => $request->bedroom_num,
+            'bathroom_num' => $request->bathroom_num,
+            'latitude' => 21.016964117655,
+            'longitude' => 105.85215587642,
+            'status' => 1,
+
+        ]);
+        // $houseID = $house->id;
+        // //Store File : path = "app/public/houses/{id}"
+        // $image = 'House_' . $houseID . '_avatar.' . $request->image->getClientOriginalExtension();
+        // $url = "houses/$houseID";
+        // $house->image = $request->image->storeAs($url, $image, 'public');
+        // $house->image = 'uploads/' . $house->image;
+        // $house->save();
+
+        // Lưu album ảnh
+
+        $imagesHouseController->storeImagesHouse($request, $house);
+        return response()->json($house);
     }
 }

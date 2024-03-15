@@ -33,6 +33,8 @@ use App\Http\Controllers\UserController;
             ->name('post.filter');
         Route::get('/{id}', [PostController::class, 'show'])
             ->name('post.show');
+        Route::post('/store', [PostController::class, 'store'])
+            ->name('post.store');
     });
 
     Route::prefix('review')->group(function () {

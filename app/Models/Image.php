@@ -29,7 +29,8 @@ class Image extends Model
      */
     protected function url(): Attribute {
         return Attribute::make(
-            get: fn ($url) => asset(str_replace('\\', '/', $url))
+            //Format URL cho ảnh (thêm địa chỉ base url serve)
+            get: fn ($url) => asset(str_replace('\\', '/', 'storage/'.$url)),
         );
     }
 }

@@ -20,11 +20,13 @@ return new class extends Migration
 
             $table->foreign('user_id')
                 ->references('id')
-                ->on('users');
+                ->on('users')
+                ->onDelete('cascade');
             
             $table->foreign('review_id')
                 ->references('id')
-                ->on('reviews');
+                ->on('reviews')
+                ->onDelete('cascade');;
         });
     }
 

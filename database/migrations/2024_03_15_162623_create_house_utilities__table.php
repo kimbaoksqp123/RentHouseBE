@@ -22,11 +22,13 @@ return new class extends Migration
 
             $table->foreign('house_id')
                 ->references('id')
-                ->on('posts');
+                ->on('posts')
+                ->onDelete('cascade');
 
             $table->foreign('utility_id')
                 ->references('id')
-                ->on('utilities');
+                ->on('utilities')
+                ->onDelete('cascade');
         });
     }
 

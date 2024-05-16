@@ -26,7 +26,7 @@ return new class extends Migration
             $table->foreign('review_id')
                 ->references('id')
                 ->on('reviews')
-                ->onDelete('cascade');;
+                ->onDelete('cascade');
         });
     }
 

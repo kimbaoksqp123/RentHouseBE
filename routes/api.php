@@ -7,6 +7,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UtilityController;
+use App\Http\Controllers\HouseUtilityController;
 
 /*
 |--------------------------------------------------------------------------
@@ -57,5 +58,7 @@ Route::prefix('user')->group(function () {
 Route::prefix('utilities')->group(function () {
     Route::get('/', [UtilityController::class, 'index'])
         ->name('utility.list');
+    Route::post('/store', [HouseUtilityController::class,'store'])
+        ->name('utility.store');
 });
 // });

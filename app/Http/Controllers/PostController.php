@@ -217,14 +217,6 @@ class PostController extends Controller
             'status' => 1,
 
         ]);
-        // $houseID = $house->id;
-        // //Store File : path = "app/public/houses/{id}"
-        // $image = 'House_' . $houseID . '_avatar.' . $request->image->getClientOriginalExtension();
-        // $url = "houses/$houseID";
-        // $house->image = $request->image->storeAs($url, $image, 'public');
-        // $house->image = 'uploads/' . $house->image;
-        // $house->save();
-
         // Lưu album ảnh
 
         $imagesHouseController->storeImagesHouse($request, $house);

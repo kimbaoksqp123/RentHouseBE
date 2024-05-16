@@ -12,7 +12,11 @@ class HouseUtility extends Model
     protected $table = 'house_utilities';
 
     protected $fillable = [
-        'name',
+        'house_id',
+        'utility_id',
+        'image',
+        'price',
+        'quantity',
     ];
 
     public function utility() {

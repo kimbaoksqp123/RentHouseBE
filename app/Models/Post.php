@@ -52,6 +52,11 @@ class Post extends Model
         return $this->hasMany(Review::class);
     }
 
+    // 1 post - n houseutilities
+    public function house_utilities() {
+        return $this->hasMany(HouseUtility::class);
+    }
+
     // n posts - n users
     public function bookmarkedBy()
     {

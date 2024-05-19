@@ -8,6 +8,7 @@ use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UtilityController;
 use App\Http\Controllers\HouseUtilityController;
+use App\Http\Controllers\RequestViewHouseController;
 
 /*
 |--------------------------------------------------------------------------
@@ -61,4 +62,10 @@ Route::prefix('utilities')->group(function () {
     Route::post('/store', [HouseUtilityController::class,'store'])
         ->name('utility.store');
 });
+
+Route::prefix('request_view_houses')->group(function () {
+    Route::post('/store', [RequestViewHouseController::class,'store'])
+        ->name('request_view_house.store');
+});
+
 // });

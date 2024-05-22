@@ -59,12 +59,25 @@ Route::prefix('user')->group(function () {
 Route::prefix('utilities')->group(function () {
     Route::get('/', [UtilityController::class, 'index'])
         ->name('utility.list');
-    Route::post('/store', [HouseUtilityController::class,'store'])
+    Route::post('/store', [HouseUtilityController::class, 'store'])
         ->name('utility.store');
 });
 
 Route::prefix('request_view_houses')->group(function () {
-    Route::post('/store', [RequestViewHouseController::class,'store'])
+    Route::get('/tenant_request/index', [RequestViewHouseController::class, 'getTenantRequestViewHouse'])
+        ->name('request_view_house.tenant.request.index');
+
+    Route::post('/tenant_request/{id}/{action}', [RequestViewHouseController::class, 'actionTenantRequestViewHouse'])
+        ->name('request_view_house.tenant.request.action');
+
+    Route::get('/rent_request/index', [RequestViewHouseController::class, 'getRentRequestViewHouse'])
+        ->name('request_view_house.rent.request.index');
+
+        Route::post('/rent_request/{id}/{action}', [RequestViewHouseController::class, 'actionRentRequestViewHouse'])
+        ->name('request_view_house.rent.request.action');
+
+
+    Route::post('/store', [RequestViewHouseController::class, 'store'])
         ->name('request_view_house.store');
 });
 

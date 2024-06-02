@@ -31,6 +31,7 @@ return new class extends Migration
             $table->double('longitude');
             $table->integer('status');
             $table->timestamps();
+            $table->softDeletes(); // Thêm trường deleted_at
 
             $table->foreign('user_id')
                 ->references('id')

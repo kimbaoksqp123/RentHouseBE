@@ -19,6 +19,7 @@ return new class extends Migration
             $table->integer('status'); // 1:pending 2:approved 3:rejected 4:deleted
             $table->string('tenant_message')->nullable(); // người thuê
             $table->string('rent_message')->nullable(); // người cho thuê
+            $table->unsignedBigInteger('deleted_by')->nullable(); // id người xóa;
             $table->timestamps();
             $table->softDeletes(); // Thêm trường deleted_at
 

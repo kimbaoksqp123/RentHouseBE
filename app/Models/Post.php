@@ -4,10 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 
 class Post extends Model
 {
     use HasFactory;
+    use SoftDeletes;
+
+    protected $table = 'posts';
+
 
     protected $fillable = [
         'user_id',
@@ -25,7 +31,8 @@ class Post extends Model
         'bathroom_num',
         'latitude',
         'longitude',
-        'status',
+        'status', // 1: empty 2: rent 3: hidden 4: lock 
+        'deleted_by',
     ];
 
     /**
@@ -73,5 +80,10 @@ class Post extends Model
         if($areaMin && $areaMax) return $query->whereBetween('land_area',  [$areaMin, $areaMax]);
         if(!$areaMin && $areaMax) return $query->where('land_area', '<', $areaMax);
         if(!$areaMax && $areaMin) return $query->where('land_area', '>', $areaMin);
+    }
+
+    public static function getRentHouse($user_id){
+        return self::where('user_id', $user_id)
+        ->get();
     }
 }

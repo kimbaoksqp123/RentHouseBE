@@ -38,6 +38,10 @@ Route::prefix('posts')->group(function () {
         ->name('post.show');
     Route::post('/store', [PostController::class, 'store'])
         ->name('post.store');
+    Route::get('/rent_house/index', [PostController::class, 'getRentHouse'])
+        ->name('post.rent.house.index');
+    Route::post('/{id}/{action}',[PostController::class, 'actionHouse'])
+        ->name('post.action');
 });
 
 Route::prefix('review')->group(function () {
@@ -73,7 +77,7 @@ Route::prefix('request_view_houses')->group(function () {
     Route::get('/rent_request/index', [RequestViewHouseController::class, 'getRentRequestViewHouse'])
         ->name('request_view_house.rent.request.index');
 
-        Route::post('/rent_request/{id}/{action}', [RequestViewHouseController::class, 'actionRentRequestViewHouse'])
+    Route::post('/rent_request/{id}/{action}', [RequestViewHouseController::class, 'actionRentRequestViewHouse'])
         ->name('request_view_house.rent.request.action');
 
 

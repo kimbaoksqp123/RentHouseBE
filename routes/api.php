@@ -8,6 +8,7 @@ use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UtilityController;
 use App\Http\Controllers\HouseUtilityController;
+use App\Http\Controllers\RequestViewHouseController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,6 +38,10 @@ Route::prefix('posts')->group(function () {
         ->name('post.show');
     Route::post('/store', [PostController::class, 'store'])
         ->name('post.store');
+    Route::get('/rent_house/index', [PostController::class, 'getRentHouse'])
+        ->name('post.rent.house.index');
+    Route::post('/{id}/{action}',[PostController::class, 'actionHouse'])
+        ->name('post.action');
 });
 
 Route::prefix('review')->group(function () {
@@ -58,7 +63,26 @@ Route::prefix('user')->group(function () {
 Route::prefix('utilities')->group(function () {
     Route::get('/', [UtilityController::class, 'index'])
         ->name('utility.list');
-    Route::post('/store', [HouseUtilityController::class,'store'])
+    Route::post('/store', [HouseUtilityController::class, 'store'])
         ->name('utility.store');
 });
+
+Route::prefix('request_view_houses')->group(function () {
+    Route::get('/tenant_request/index', [RequestViewHouseController::class, 'getTenantRequestViewHouse'])
+        ->name('request_view_house.tenant.request.index');
+
+    Route::post('/tenant_request/{id}/{action}', [RequestViewHouseController::class, 'actionTenantRequestViewHouse'])
+        ->name('request_view_house.tenant.request.action');
+
+    Route::get('/rent_request/index', [RequestViewHouseController::class, 'getRentRequestViewHouse'])
+        ->name('request_view_house.rent.request.index');
+
+    Route::post('/rent_request/{id}/{action}', [RequestViewHouseController::class, 'actionRentRequestViewHouse'])
+        ->name('request_view_house.rent.request.action');
+
+
+    Route::post('/store', [RequestViewHouseController::class, 'store'])
+        ->name('request_view_house.store');
+});
+
 // });

@@ -222,4 +222,42 @@ class PostController extends Controller
         $imagesHouseController->storeImagesHouse($request, $house);
         return response()->json($house);
     }
+
+    // Get rent house data
+    public function getRentHouse(Request $request)
+    {
+        $user_id = $request->userID;
+        $rent_houses = Post::getRentHouse($user_id);
+        return response()->json($rent_houses);
+    }
+
+    public function actionHouse(Request $request)
+    {
+        $request->validate([
+            'id' => 'required|integer',
+            'action' => 'required|string|in:hiden,delete,edit,unhiden,unrent'
+        ]);
+
+        $house = Post::find($request->id);
+        if (!$house) {
+            return response()->json(['error' => 'House not found'], 404);
+        }
+
+        switch ($request->action) {
+            case 'hiden':
+                $house->status = 3;
+                break;
+            case 'unhiden':
+                $house->status = 1;
+                break;
+            case 'unrent':
+                $house->status = 1;
+                break;
+            case 'delete':
+                $house->delete();
+                return response()->json(['message' => 'House deleted successfully']);
+        }
+        $house->save();
+        return response()->json(['message' => 'House updated successfully']);
+    }
 }

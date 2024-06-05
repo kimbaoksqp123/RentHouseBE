@@ -95,7 +95,7 @@ class PostController extends Controller
     {
         $userId = $request->user_id;
 
-        $post = Post::with(['user', 'images', 'videos'])->find($id);
+        $post = Post::with(['user', 'images', 'videos','houseUtilities'])->find($id);
 
         if ($post) {
             $post->view_number++;

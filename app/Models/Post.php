@@ -60,8 +60,8 @@ class Post extends Model
     }
 
     // 1 post - n houseutilities
-    public function house_utilities() {
-        return $this->hasMany(HouseUtility::class);
+    public function houseUtilities() {
+        return $this->hasMany(HouseUtility::class,'house_id', 'id');
     }
 
     // n posts - n users

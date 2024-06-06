@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\RequestViewHouse;
 use Illuminate\Http\Request;
-use App\Models\User;
+use App\Enums\RequestViewHouse\RequestStatus;
 
 class RequestViewHouseController extends Controller
 {
@@ -14,7 +14,7 @@ class RequestViewHouseController extends Controller
             'user_id' => $request->userID,
             'house_id' => $request->houseID,
             'view_time' => $request->view_time,
-            'status' => 1,
+            'status' => RequestStatus::Pending,
             'tenant_message' => $request->tenant_message
         ]);
     }
@@ -40,18 +40,16 @@ class RequestViewHouseController extends Controller
         }
         switch ($request->action) {
             case 'accept':
-                $rentRequest->status = 2;
+                $rentRequest->status = RequestStatus::Approved;
                 break;
             case 'reject':
-                $rentRequest->status = 3;
+                $rentRequest->status = RequestStatus::Rejected;
                 break;
             case 'delete':
-                $rentRequest->status = 4;
-                $rentRequest->save();
                 $rentRequest->delete();
-            return response()->json(['message' => 'Request deleted successfully']);
+                return response()->json(['message' => 'Request deleted successfully']);
             case 'cancel':
-                $rentRequest->status = 5;
+                $rentRequest->status = RequestStatus::Canceled;
                 break;
             default:
                 return response()->json(['error' => 'Invalid action'], 400);
@@ -83,15 +81,13 @@ class RequestViewHouseController extends Controller
         }
         switch ($request->action) {
             case 'cancel':
-                $rentRequest->status = 5;
+                $rentRequest->status = RequestStatus::Canceled;
                 $rentRequest->rent_message = null;
                 break;
-            
+
             case 'delete':
-                $rentRequest->status = 4;
-                $rentRequest->save();
                 $rentRequest->delete();
-            return response()->json(['message' => 'Request deleted successfully']);
+                return response()->json(['message' => 'Request deleted successfully']);
             default:
                 return response()->json(['error' => 'Invalid action'], 400);
         }

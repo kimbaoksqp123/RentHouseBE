@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Enums\House\HouseStatus;
 
 class PostController extends Controller
 {
@@ -214,7 +215,7 @@ class PostController extends Controller
             'bathroom_num' => $request->bathroom_num,
             'latitude' => 21.016964117655,
             'longitude' => 105.85215587642,
-            'status' => 1,
+            'status' => HouseStatus::Empty,
 
         ]);
         // Lưu album ảnh

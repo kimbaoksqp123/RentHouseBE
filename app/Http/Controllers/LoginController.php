@@ -3,20 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
     public function index(Request $request) {
-        $username = $request->username;
-        $password = $request->password;
+        $credentials = $request->only('email', 'password');
 
-        $user = User::where('username', $username)->where('password', $password)->first();
+        if (Auth::attempt($credentials)) {
+            // Xác thực thành công, trả về thông tin người dùng
+            return Auth::user();
+        }
 
-        if(!$user)
-            return response([], 404);
-
-        return $user;
+        // Xác thực thất bại, trả về mã lỗi 404
+        return response([], 404);
     }
 }

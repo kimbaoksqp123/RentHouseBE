@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
-use App\Http\Controllers\LoginController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UtilityController;
@@ -23,7 +23,8 @@ use App\Http\Controllers\RequestViewHouseController;
 
 // Route::group(['middleware' => ['web']], function () {
 
-Route::post('/login', [LoginController::class, 'index']);
+Route::post('/login', [AuthController::class, 'login']);
+Route::post('/register', [AuthController::class, 'register']);
 
 Route::prefix('posts')->group(function () {
     Route::post('/', [PostController::class, 'index'])

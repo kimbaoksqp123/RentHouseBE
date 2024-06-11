@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class User extends Authenticatable
 {
@@ -71,5 +72,12 @@ class User extends Authenticatable
     public function bookmarks()
     {
         return $this->belongsToMany(Post::class, 'bookmarks', 'user_id', 'post_id');
+    }
+
+    protected function avatar(): Attribute {
+        return Attribute::make(
+            //Format URL cho ảnh (thêm địa chỉ base url serve)
+            get: fn ($avatar) => asset(str_replace('\\', '/', 'storage/'.$avatar)),
+        );
     }
 }

@@ -213,8 +213,8 @@ class PostController extends Controller
             'description' => $request->description,
             'bedroom_num' => $request->bedroom_num,
             'bathroom_num' => $request->bathroom_num,
-            'latitude' => 21.016964117655,
-            'longitude' => 105.85215587642,
+            'latitude' => $request->latitude ?? 21.016964117655,
+            'longitude' => $request->longitude ?? 105.85215587642,
             'status' => HouseStatus::Empty,
 
         ]);

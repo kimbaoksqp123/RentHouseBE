@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\CreateUserRequest;
 
 class AuthController extends Controller
 {
@@ -23,7 +24,7 @@ class AuthController extends Controller
         return response([], 404);
     }
 
-    public function register(Request $request) {
+    public function register(CreateUserRequest $request) {
         $user = User::create([
             'name' => $request->name,
             'phone' => $request->phone,

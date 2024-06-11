@@ -7,6 +7,7 @@ use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Enums\House\HouseStatus;
+use App\Http\Requests\CreateHouseRequest;
 
 class PostController extends Controller
 {
@@ -196,27 +197,27 @@ class PostController extends Controller
         return $result;
     }
 
-    public function store(Request $request)
+    public function store(CreateHouseRequest $request)
     {
+        $validatedData = $request->validated();
         $imagesHouseController = new ImagesHouseController();
         $imageFiles = $request->file("images");
         $house = Post::create([
-            'user_id' => $request->userID,
-            'title' => $request->title,
-            'address' => $request->address,
-            'ward' => $request->ward,
-            'district' => $request->district,
-            'price' => $request->price,
-            'land_area' => $request->land_area,
-            'type' => $request->type,
+            'user_id' => $validatedData['userID'],
+            'title' => $validatedData['title'],
+            'address' => $validatedData['address'],
+            'ward' => $validatedData['ward'],
+            'district' => $validatedData['district'],
+            'price' => $validatedData['price'],
+            'land_area' => $validatedData['land_area'],
+            'type' => $validatedData['type'],
             'view_number' => 1,
-            'description' => $request->description,
-            'bedroom_num' => $request->bedroom_num,
-            'bathroom_num' => $request->bathroom_num,
-            'latitude' => $request->latitude ?? 21.016964117655,
-            'longitude' => $request->longitude ?? 105.85215587642,
+            'description' => $validatedData['description'],
+            'bedroom_num' => $validatedData['bedroom_num'],
+            'bathroom_num' => $validatedData['bathroom_num'],
+            'latitude' => $validatedData['latitude'] ?? 21.016964117655,
+            'longitude' => $validatedData['longitude'] ?? 105.85215587642,
             'status' => HouseStatus::Empty,
-
         ]);
         // Lưu album ảnh
 

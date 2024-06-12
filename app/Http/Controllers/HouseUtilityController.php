@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateHouseUtilityRequest;
 use App\Models\HouseUtility;
 use Illuminate\Http\Request;
 
 class HouseUtilityController extends Controller
 {
-    public function store(Request $request)
+    public function store(CreateHouseUtilityRequest $request)
     {
         $utilities = $request->utilities;
         //utility/housID/Utility_utility_id_...

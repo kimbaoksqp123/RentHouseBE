@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('house_id');
             $table->timestamp('view_time');
-            $table->integer('status'); // 1:pending 2:approved 3:rejected 4:deleted
+            $table->tinyInteger('status'); // 1:pending 2:approved 3:rejected 4:deleted
             $table->string('tenant_message')->nullable(); // người thuê
             $table->string('rent_message')->nullable(); // người cho thuê
             $table->unsignedBigInteger('deleted_by')->nullable(); // id người xóa;

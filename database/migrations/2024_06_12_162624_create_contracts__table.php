@@ -11,23 +11,24 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('reviews', function (Blueprint $table) {
-
+        Schema::create('contracts', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('post_id');
-            $table->string('content');
+            $table->unsignedBigInteger('house_id');
+            $table->unsignedBigInteger('tenant_id');
+            $table->datetime('start_date');
+            $table->datetime('end_date');
+            $table->string('file')->nullable();
             $table->timestamps();
 
-            $table->foreign('user_id')
+            $table->foreign('tenant_id')
                 ->references('id')
                 ->on('users')
                 ->onDelete('cascade');
 
-            $table->foreign('post_id')
+            $table->foreign('house_id')
                 ->references('id')
                 ->on('posts')
-                ->onDelete('cascade');
+                ->onDelete('cascade');           
         });
     }
 
@@ -36,6 +37,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('reviews');
+        Schema::dropIfExists('request_view_houses');
     }
 };

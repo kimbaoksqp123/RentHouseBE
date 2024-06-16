@@ -18,18 +18,18 @@ return new class extends Migration
             $table->string('title');
             $table->string('address');
             $table->string('street')->nullable();
-            $table->string('ward');
-            $table->string('district');
+            $table->string('ward',20);
+            $table->string('district',20);
             $table->integer('price');
             $table->integer('land_area');
-            $table->integer('type');
+            $table->tinyInteger('type');
             $table->integer('view_number');
             $table->text('description');
-            $table->integer('bedroom_num');
-            $table->integer('bathroom_num');
+            $table->tinyInteger('bedroom_num');
+            $table->tinyInteger('bathroom_num');
             $table->double('latitude');
             $table->double('longitude');
-            $table->integer('status');
+            $table->tinyInteger('status');
             $table->timestamps();
             $table->softDeletes(); // Thêm trường deleted_at
 

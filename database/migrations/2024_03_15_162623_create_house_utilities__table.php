@@ -17,7 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('utility_id');
             $table->string('image')->nullable();
             $table->integer('price')->nullable();
-            $table->integer('quantity')->nullable();
+            $table->tinyInteger('quantity')->nullable();
             $table->timestamps();
 
             $table->foreign('house_id')

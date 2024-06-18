@@ -10,6 +10,14 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+    public function getUser($id){
+        try {
+            $user = User::findOrFail($id);
+            return response()->json($user, 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'User not found.'], 404);
+        }
+    }
     public function getBm(Request $request)
     {
         $userId = $request->user_id;

@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ContractController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UtilityController;
@@ -59,6 +60,7 @@ Route::prefix('user')->group(function () {
         ->name('post.add-bookmark');
     Route::delete('/deleteBm', [UserController::class, 'deleteBm'])
         ->name('post.delete-bookmark');
+    Route::get('/{id}', [UserController::class, 'getUser']);
 });
 
 Route::prefix('utilities')->group(function () {
@@ -84,6 +86,12 @@ Route::prefix('request_view_houses')->group(function () {
 
     Route::post('/store', [RequestViewHouseController::class, 'store'])
         ->name('request_view_house.store');
+});
+
+Route::prefix('contracts')->group(function () {
+    Route::post('/store', [ContractController::class, 'store'])
+        ->name('contract.store');
+       
 });
 
 // });

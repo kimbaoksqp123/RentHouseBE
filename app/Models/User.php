@@ -26,6 +26,7 @@ class User extends Authenticatable
         'username',
         'email',
         'address',
+        'password',
         'cccd_number',
     ];
 

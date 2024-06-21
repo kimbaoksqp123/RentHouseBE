@@ -7,6 +7,7 @@ use App\Http\Requests\CreateContractRequest;
 use App\Models\Contract;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use App\Enums\House\HouseStatus;
 
 class ContractController extends Controller
 {
@@ -25,6 +26,11 @@ class ContractController extends Controller
             $contract->file = $fileUrl;
             $contract->save();
         }
+
+        if ($contract->post) {
+            $contract->post->status = HouseStatus::Hidden;
+            $contract->post->save();
+        }
         return response()->json($contract);
     }
 
@@ -40,6 +46,15 @@ class ContractController extends Controller
     {
         $user_id = $request->userID;
         $tenantContracts = Contract::where('tenant_id', $user_id)->get();
+        foreach ($tenantContracts as $tenantContract) {
+            $post = Post::where('id', $tenantContract->house_id)->first();
+            if ($post) {
+                $tenantContract->rent_id = $post->user_id;
+            } else {
+                // Handle the case where no post is found for the given house_id
+                $tenantContract->rent_id = null; // Or any default value you prefer
+            }
+        }
         return response()->json($tenantContracts);
     }
 }

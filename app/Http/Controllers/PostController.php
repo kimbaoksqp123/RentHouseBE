@@ -26,6 +26,8 @@ class PostController extends Controller
         $ward = $request->ward;
         $street = $request->street;
         $userId = $request->user_id;
+
+        $query->where('status', '!=', HouseStatus::Hidden);
         //sort:
         switch ($sortType) {
             case 1:

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateContractRequest;
 use App\Models\Contract;
+use App\Models\Post;
+use Illuminate\Http\Request;
 
 class ContractController extends Controller
 {
@@ -24,5 +26,20 @@ class ContractController extends Controller
             $contract->save();
         }
         return response()->json($contract);
+    }
+
+    public function getRentContract(Request $request)
+    {
+        $user_id = $request->userID;
+        $postIDs = Post::where('user_id', $user_id)->pluck('id');
+        $rentContracts = Contract::whereIn('house_id', $postIDs)->get();
+        return response()->json($rentContracts);
+    }
+
+    public function getTenantContract(Request $request)
+    {
+        $user_id = $request->userID;
+        $tenantContracts = Contract::where('tenant_id', $user_id)->get();
+        return response()->json($tenantContracts);
     }
 }

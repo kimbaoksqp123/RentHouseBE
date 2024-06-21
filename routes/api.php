@@ -91,7 +91,8 @@ Route::prefix('request_view_houses')->group(function () {
 Route::prefix('contracts')->group(function () {
     Route::post('/store', [ContractController::class, 'store'])
         ->name('contract.store');
-       
+    Route::get('/rent_contract/index', [ContractController::class, 'getRentContract']);
+    Route::get('/tenant_contract/index', [ContractController::class, 'getTenantContract']);
 });
 
 // });

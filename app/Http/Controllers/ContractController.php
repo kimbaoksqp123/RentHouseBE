@@ -34,6 +34,12 @@ class ContractController extends Controller
         return response()->json($contract);
     }
 
+    public function getContractWithID(Request $request)
+    {
+        $id = $request->id;
+        $contract = Contract::findOrFail($id);
+        return response()->json($contract);
+    }
     public function getRentContract(Request $request)
     {
         $user_id = $request->userID;

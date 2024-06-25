@@ -74,11 +74,4 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Post::class, 'bookmarks', 'user_id', 'post_id');
     }
-
-    protected function avatar(): Attribute {
-        return Attribute::make(
-            //Format URL cho ảnh (thêm địa chỉ base url serve)
-            get: fn ($avatar) =>  $avatar ? asset(str_replace('\\', '/', 'storage/'.$avatar)) : null,
-        );
-    }
 }

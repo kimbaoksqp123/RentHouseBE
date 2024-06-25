@@ -38,9 +38,7 @@ class AuthController extends Controller
     
         $avatar = $request->file("avatar");
         if (!empty($avatar)) {
-            $path = 'image/user/' . $user->id . '/';
-            $imageOriginalExtension = 'UserAvatar.' . $avatar[0]->getClientOriginalExtension();
-            $storedPath = Storage::putFileAs($path, $avatar[0], $imageOriginalExtension);
+            $storedPath= Storage::disk('s3')->put('avatars', $avatar[0]);
             $user->avatar = Storage::url($storedPath);
             $user->save();
         }

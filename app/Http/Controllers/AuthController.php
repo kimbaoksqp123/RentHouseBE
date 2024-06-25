@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\CreateUserRequest;
+use Illuminate\Support\Facades\Storage;
 
 class AuthController extends Controller
 {
@@ -34,14 +35,16 @@ class AuthController extends Controller
             'cccd_number' => $request->cccd_number,
             'type' => UserType::USER,
         ]);
+    
         $avatar = $request->file("avatar");
         if (!empty($avatar)) {
-            $imageOriginalExtension = 'UserAvatar' . '.' . $avatar[0]->getClientOriginalExtension();
-            $url = 'image/user/' . $user->id;
-            $imageUrl = $avatar[0]->storeAs($url, $imageOriginalExtension, 'public');
-            $user->avatar = $imageUrl;
+            $path = 'image/user/' . $user->id . '/';
+            $imageOriginalExtension = 'UserAvatar.' . $avatar->getClientOriginalExtension();
+            $storedPath = Storage::putFileAs($path, $avatar, $imageOriginalExtension);
+            $user->avatar = Storage::url($storedPath);
             $user->save();
         }
+    
         return response()->json($user);
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CreateHouseUtilityRequest;
 use App\Models\HouseUtility;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class HouseUtilityController extends Controller
 {
@@ -21,10 +22,8 @@ class HouseUtilityController extends Controller
             ]);
             $image = $utility['image'];
             if (!empty($image)) {
-                $imageOriginalExtension = 'HouseUtility_' . $house_utility->id . '.' . $image->getClientOriginalExtension();
-                $url = 'image/' . $utility['houseID'];
-                $imageUrl = $image->storeAs($url, $imageOriginalExtension, 'public');
-                $house_utility->image = $imageUrl;
+                $imageUrl = Storage::disk('s3')->put('utilities',$image);
+                $house_utility->image = Storage::url($imageUrl);
                 $house_utility->save();
             }
         }

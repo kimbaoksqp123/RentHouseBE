@@ -23,13 +23,4 @@ class Image extends Model
     public function post() {
         return $this->belongsTo(Post::class, 'post_id', 'id');
     }
-
-    /**
-     * Accessors
-     */
-    protected function url(): Attribute {
-        return Attribute::make(
-            get: fn ($url) => $url ? asset(str_replace('\\', '/', 'storage/'.$url)) : null,
-        );
-    }        
 }

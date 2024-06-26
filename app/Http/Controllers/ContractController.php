@@ -8,6 +8,7 @@ use App\Models\Contract;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use App\Enums\House\HouseStatus;
+use Illuminate\Support\Facades\Storage;
 
 class ContractController extends Controller
 {
@@ -20,10 +21,8 @@ class ContractController extends Controller
         ]);
         $file = $request->file("file");
         if (!empty($file)) {
-            $fileOriginalExtension = 'ContractFile' . '.' . $file->getClientOriginalExtension();
-            $url = 'contract/' . $contract->id;
-            $fileUrl = $file->storeAs($url, $fileOriginalExtension, 'public');
-            $contract->file = $fileUrl;
+            $fileUrl = Storage::disk('s3')->put('contracts',$file);
+            $contract->file = Storage::url($fileUrl);
             $contract->save();
         }
 

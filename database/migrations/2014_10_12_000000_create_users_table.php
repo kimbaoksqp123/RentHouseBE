@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('avatar')->nullable();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('password',30);
+            $table->string('password',255);
             $table->string('address')->nullable();
             $table->string('cccd_number', 20)->nullable();
             $table->rememberToken();

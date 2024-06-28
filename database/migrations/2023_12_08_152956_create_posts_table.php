@@ -37,6 +37,9 @@ return new class extends Migration
                 ->references('id')
                 ->on('users')
                 ->onDelete('cascade');
+                
+            $table->index('user_id');
+            $table->index(['district', 'ward', 'price','land_area']);
         });
     }
 
@@ -45,6 +48,10 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::table('posts', function (Blueprint $table) {
+            $table->dropIndex(['user_id']);
+            $table->dropIndex(['district', 'ward', 'price', 'land_area']);
+        });
         Schema::dropIfExists('posts');
     }
 };

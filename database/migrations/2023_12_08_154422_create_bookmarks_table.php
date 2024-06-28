@@ -18,6 +18,8 @@ return new class extends Migration
             $table->unsignedBigInteger('post_id');
             $table->timestamps();
 
+            $table->index('user_id');
+
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users')->onDelete('cascade');
@@ -34,6 +36,9 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::table('bookmarks', function (Blueprint $table) {
+            $table->dropIndex(['user_id']);
+        });
         Schema::dropIfExists('bookmarks');
     }
 };

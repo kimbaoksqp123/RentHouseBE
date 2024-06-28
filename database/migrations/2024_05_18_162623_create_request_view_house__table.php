@@ -23,6 +23,8 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes(); // Thêm trường deleted_at
 
+            $table->index('user_id');
+
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users')
@@ -40,6 +42,9 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::table('request_view_houses', function (Blueprint $table) {
+            $table->dropIndex(['user_id']);
+        });
         Schema::dropIfExists('request_view_houses');
     }
 };

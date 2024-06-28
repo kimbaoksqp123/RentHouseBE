@@ -20,6 +20,8 @@ return new class extends Migration
             $table->tinyInteger('quantity')->nullable();
             $table->timestamps();
 
+            $table->index('house_id');
+
             $table->foreign('house_id')
                 ->references('id')
                 ->on('posts')
@@ -37,6 +39,9 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::table('house_utilities', function (Blueprint $table) {
+            $table->dropIndex(['house_id']);
+        });
         Schema::dropIfExists('house_utilities');
     }
 };

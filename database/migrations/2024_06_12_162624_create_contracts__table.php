@@ -20,6 +20,8 @@ return new class extends Migration
             $table->string('file')->nullable();
             $table->timestamps();
 
+            $table->index('tenant_id');
+
             $table->foreign('tenant_id')
                 ->references('id')
                 ->on('users')
@@ -37,6 +39,9 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::table('contracts', function (Blueprint $table) {
+            $table->dropIndex(['tenant_id']);
+        });
         Schema::dropIfExists('contracts');
     }
 };

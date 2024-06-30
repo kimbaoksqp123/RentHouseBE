@@ -8,8 +8,9 @@ use Illuminate\Http\Request;
 
 class HouseUtilityController extends Controller
 {
-    public function store($request, $houseID)
+    public function store($request, $house)
     {
+        $houseID = $house->id;
         $utilities = $request->utilities;
         //utility/housID/Utility_utility_id_...
         foreach ($utilities as $utility) {
@@ -22,7 +23,7 @@ class HouseUtilityController extends Controller
             $image = $utility['image'];
             if (!empty($image)) {
                 $imageOriginalExtension = 'HouseUtility_' . $house_utility->id . '.' . $image->getClientOriginalExtension();
-                $url = 'image/' . $utility['houseID'];
+                $url = 'image/' . $houseID;
                 $imageUrl = $image->storeAs($url, $imageOriginalExtension, 'public');
                 $house_utility->image = $imageUrl;
                 $house_utility->save();

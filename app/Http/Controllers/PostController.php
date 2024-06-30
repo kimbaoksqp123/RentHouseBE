@@ -223,10 +223,8 @@ class PostController extends Controller
         ]);
         // // Lưu album ảnh
 
-        $houseID = $house->id;
-
-        // $imagesHouseController->storeImagesHouse($request, $house);
-        $houseUtilityController->store($request, $houseID);
+        $imagesHouseController->storeImagesHouse($request, $house);
+        $houseUtilityController->store($request, $house);
         return response()->json($house);
     }
 

@@ -203,7 +203,7 @@ class PostController extends Controller
     {
         $validatedData = $request->validated();
         $imagesHouseController = new ImagesHouseController();
-        $imageFiles = $request->file("images");
+        $houseUtilityController = new HouseUtilityController();
         $house = Post::create([
             'user_id' => $validatedData['userID'],
             'title' => $validatedData['title'],
@@ -221,9 +221,10 @@ class PostController extends Controller
             'longitude' => $validatedData['longitude'] ?? 105.85215587642,
             'status' => HouseStatus::Empty,
         ]);
-        // Lưu album ảnh
+        // // Lưu album ảnh
 
         $imagesHouseController->storeImagesHouse($request, $house);
+        $houseUtilityController->store($request, $house);
         return response()->json($house);
     }
 
@@ -232,7 +233,7 @@ class PostController extends Controller
     {
         $user_id = $request->userID;
         $rent_houses = Post::getRentHouse($user_id);
-        return response()->json($rent_houses);
+        return response($rent_houses);
     }
 
     public function actionHouse(Request $request)

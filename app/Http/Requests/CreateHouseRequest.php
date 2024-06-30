@@ -22,6 +22,11 @@ class CreateHouseRequest extends FormRequest
             'bathroom_num' => 'required|integer',
             'latitude' => 'nullable|numeric',
             'longitude' => 'nullable|numeric',
+            'utilities' => 'required|array',
+            'utilities.*.price' => 'required|integer|min:0',
+            'utilities.*.quantity' => 'required|integer|min:1',
+            'utilities.*.utility_id' => 'required|integer|exists:utilities,id',
+            'utilities.*.image' => 'nullable|image|max:2048',
         ];
     }
 }

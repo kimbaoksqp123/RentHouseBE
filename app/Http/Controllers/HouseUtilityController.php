@@ -9,13 +9,14 @@ use Illuminate\Support\Facades\Storage;
 
 class HouseUtilityController extends Controller
 {
-    public function store(CreateHouseUtilityRequest $request)
+    public function store($request, $house)
     {
+        $houseID = $house->id;
         $utilities = $request->utilities;
         //utility/housID/Utility_utility_id_...
         foreach ($utilities as $utility) {
             $house_utility = HouseUtility::create([
-                'house_id' => $utility['houseID'],
+                'house_id' => $houseID,
                 'price' => $utility['price'],
                 'quantity' => $utility['quantity'],
                 'utility_id' => $utility['utility_id'],

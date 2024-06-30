@@ -18,8 +18,8 @@ return new class extends Migration
             $table->string('title');
             $table->string('address');
             $table->string('street')->nullable();
-            $table->string('ward',20);
-            $table->string('district',20);
+            $table->string('ward',50);
+            $table->string('district',50);
             $table->integer('price');
             $table->integer('land_area');
             $table->tinyInteger('type');

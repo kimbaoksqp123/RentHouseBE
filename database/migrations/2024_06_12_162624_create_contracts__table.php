@@ -40,6 +40,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('contracts', function (Blueprint $table) {
+            $table->dropForeign(['tenant_id']);
             $table->dropIndex(['tenant_id']);
         });
         Schema::dropIfExists('contracts');

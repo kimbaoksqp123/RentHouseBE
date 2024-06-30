@@ -37,6 +37,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('bookmarks', function (Blueprint $table) {
+            $table->dropForeign(['user_id']);
             $table->dropIndex(['user_id']);
         });
         Schema::dropIfExists('bookmarks');

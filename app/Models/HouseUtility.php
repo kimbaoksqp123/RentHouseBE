@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class HouseUtility extends Model
 {
@@ -13,6 +12,7 @@ class HouseUtility extends Model
     protected $table = 'house_utilities';
 
     protected $fillable = [
+        'id',
         'house_id',
         'utility_id',
         'image',

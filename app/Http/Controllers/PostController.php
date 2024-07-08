@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Enums\House\HouseStatus;
 use App\Http\Requests\CreateHouseRequest;
+use App\Http\Requests\UpdateHouseRequest;
 
 class PostController extends Controller
 {
@@ -228,6 +229,36 @@ class PostController extends Controller
         return response()->json($house);
     }
 
+    public function update(Request $request, $id)
+    {
+        $house = Post::findOrFail($id);
+        // Update the house record with validated data
+        $house->update([
+            'title' => $request->title,
+            'address' => $request->address,
+            'ward' => $request->ward,
+            'district' => $request->district,
+            'price' => $request->price,
+            'land_area' => $request->land_area,
+            'type' => $request->type,
+            'description' => $request->description,
+            'bedroom_num' => $request->bedroom_num,
+            'bathroom_num' => $request->bathroom_num,
+            'latitude' => $request->latitude,
+            'longitude' => $request->longitude,
+        ]);
+
+        // Update images
+        $imagesHouseController = new ImagesHouseController();
+        $imagesHouseController->updateImagesHouse($request, $house);
+
+        // Update utilities
+        $houseUtilityController = new HouseUtilityController();
+        $houseUtilityController->update($request, $house);
+
+        return response()->json($house);
+    }
+
     // Get rent house data
     public function getRentHouse(Request $request)
     {
@@ -264,5 +295,11 @@ class PostController extends Controller
         }
         $house->save();
         return response()->json(['message' => 'House updated successfully']);
+    }
+
+    public function getHouseWithID($id)
+    {   
+        $post = Post::with(['images', 'houseUtilities'])->find($id);
+        return response($post);
     }
 }

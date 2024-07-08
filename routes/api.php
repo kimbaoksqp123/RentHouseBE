@@ -40,6 +40,10 @@ Route::prefix('posts')->group(function () {
         ->name('post.show');
     Route::post('/store', [PostController::class, 'store'])
         ->name('post.store');
+    Route::post('/update/{id}', [PostController::class, 'update'])
+        ->name('post.update');
+    Route::get('/getHouseWithID/{id}', [PostController::class, 'getHouseWithID'])
+        ->name('post.get.house.withID');
     Route::get('/rent_house/index', [PostController::class, 'getRentHouse'])
         ->name('post.rent.house.index');
     Route::post('/{id}/{action}',[PostController::class, 'actionHouse'])

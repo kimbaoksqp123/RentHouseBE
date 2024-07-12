@@ -23,11 +23,4 @@ class HouseUtility extends Model
     public function utility() {
         return $this->belongsTo(Utility::class);
     }
-
-    protected function image(): Attribute {
-        return Attribute::make(
-            //Format URL cho ảnh (thêm địa chỉ base url serve)
-            get: fn ($image) => asset(str_replace('\\', '/', 'storage/'.$image)),
-        );
-    }
 }

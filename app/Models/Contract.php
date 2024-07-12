@@ -35,11 +35,4 @@ class Contract extends Model
     {
         return $this->belongsTo(User::class, 'tenant_id', 'id');
     }
-
-    protected function file(): Attribute {
-        return Attribute::make(
-            //Format URL cho ảnh (thêm địa chỉ base url serve)
-            get: fn ($file) => asset(str_replace('\\', '/', 'storage/'.$file)),
-        );
-    }    
 }

@@ -43,6 +43,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('request_view_houses', function (Blueprint $table) {
+            $table->dropForeign(['user_id']);
             $table->dropIndex(['user_id']);
         });
         Schema::dropIfExists('request_view_houses');
